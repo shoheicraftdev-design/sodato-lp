@@ -65,6 +65,12 @@
     padding: 14px 30px; border-radius: 999px; font-size: 1rem;
   }
   .cta:hover { opacity: .85; }
+  /* App Store 公開前の待機表示。承認後は cta-pending を消して <a class="cta"> に戻す */
+  .cta-pending {
+    display: inline-block; background: var(--bg-soft); color: var(--fg-soft);
+    border: 1px solid var(--line); font-weight: 600;
+    padding: 13px 29px; border-radius: 999px; font-size: 1rem;
+  }
   .cta-note { display: block; margin-top: 12px; font-size: .85rem; color: var(--fg-soft); }
 
   h2 { font-size: clamp(1.3rem, 4.6vw, 1.7rem); margin: 0 0 10px; line-height: 1.45; }
@@ -130,9 +136,9 @@
       Sodato は、観葉植物の次の水やり日を数えておくアプリです。<br>
       図鑑もコミュニティもありません。
     </p>
-    <!-- TODO: 審査承認後、App Store の実URL(https://apps.apple.com/jp/app/id########)に差し替える -->
-    <a class="cta" href="https://apps.apple.com/jp/app/idXXXXXXXXXX">App Store で見る</a>
-    <span class="cta-note">無料。買い切り 480円 あり（月額・年額の課金はありません）</span>
+    <!-- TODO: 審査承認後 <a class="cta" href="https://apps.apple.com/jp/app/id########">App Store で見る</a> に差し替える -->
+    <span class="cta-pending">App Store 審査中</span>
+    <span class="cta-note">まもなく公開します。無料。買い切り 480円 あり（月額・年額の課金はありません）</span>
   </div>
 </header>
 
@@ -387,8 +393,8 @@
 
 <footer>
   <div class="wrap">
-    <!-- TODO: 審査承認後、App Store の実URLに差し替える -->
-    <p><a class="cta" href="https://apps.apple.com/jp/app/idXXXXXXXXXX">App Store で見る</a></p>
+    <!-- TODO: 審査承認後 <a class="cta" href="https://apps.apple.com/jp/app/id########">App Store で見る</a> に差し替える -->
+    <p><span class="cta-pending">App Store 審査中</span></p>
     <p style="margin-top:26px">
       <a href="https://shoheicraftdev-design.github.io/sodato-support/">サポート</a>
       <a href="https://shoheicraftdev-design.github.io/sodato-support/privacy.html">プライバシーポリシー</a>
