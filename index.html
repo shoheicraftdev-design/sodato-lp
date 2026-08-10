@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sodato — 次の水やりが「あと◯日」でわかる</title>
+<meta name="description" content="観葉植物の次の水やり日を「あと◯日」で示す iPhone アプリ。夏と冬で2倍以上変わる間隔に季節で追随します。図鑑もコミュニティもなし、1鉢から5鉢の人のために作りました。">
+<meta property="og:title" content="Sodato — 次の水やりが「あと◯日」でわかる">
+<meta property="og:description" content="観葉植物の次の水やり日を「あと◯日」で示す iPhone アプリ。季節で変わる間隔に追随します。1鉢から5鉢の人のために。">
+<meta property="og:type" content="website">
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f4f6f4;
+    --fg: #17201a;
+    --fg-soft: #5b6560;
+    --line: #e0e5e1;
+    --accent: #1f7a4d;
+    --green: #34c759;
+    --dry: #cfe3d4;
+    --card: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #101311;
+      --bg-soft: #1a1f1c;
+      --fg: #eef2ef;
+      --fg-soft: #a3ada7;
+      --line: #2b332e;
+      --accent: #6fd39c;
+      --dry: #2f4438;
+      --card: #1a1f1c;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+    line-height: 1.85;
+    color: var(--fg);
+    background: var(--bg);
+    font-size: 16px;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 20px; }
+  section { padding: 56px 0; border-bottom: 1px solid var(--line); }
+  section:last-of-type { border-bottom: none; }
+
+  /* hero */
+  .hero { text-align: center; padding: 64px 0 56px; }
+  .appicon {
+    width: 84px; height: 84px; border-radius: 20px; display: block;
+    margin: 0 auto 18px; border: 1px solid var(--line);
+  }
+  .mark {
+    display: inline-block; font-size: 0.8rem; letter-spacing: .12em;
+    color: var(--fg-soft); border: 1px solid var(--line);
+    border-radius: 999px; padding: 4px 14px; margin-bottom: 22px;
+  }
+  h1 { font-size: clamp(1.9rem, 6.4vw, 2.8rem); line-height: 1.35; margin: 0 0 18px; letter-spacing: .01em; }
+  .lead { font-size: clamp(1rem, 3.4vw, 1.15rem); color: var(--fg-soft); margin: 0 auto 32px; max-width: 34em; }
+  .cta {
+    display: inline-block; background: var(--fg); color: var(--bg);
+    text-decoration: none; font-weight: 600;
+    padding: 14px 30px; border-radius: 999px; font-size: 1rem;
+  }
+  .cta:hover { opacity: .85; }
+  .cta-note { display: block; margin-top: 12px; font-size: .85rem; color: var(--fg-soft); }
+
+  h2 { font-size: clamp(1.3rem, 4.6vw, 1.7rem); margin: 0 0 10px; line-height: 1.45; }
+  h3 { font-size: 1.05rem; margin: 0 0 6px; }
+  .sub { color: var(--fg-soft); margin: 0 0 30px; }
+  p { margin: 0 0 1em; }
+
+  /* 月別間隔グラフ */
+  .chart { background: var(--bg-soft); border-radius: 16px; padding: 24px 18px 16px; margin-top: 22px; }
+  .chart svg { width: 100%; height: auto; display: block; }
+  .chart-cap { font-size: .85rem; color: var(--fg-soft); margin: 12px 4px 0; }
+
+  /* feature rows */
+  .row { display: grid; grid-template-columns: 1fr 300px; gap: 40px; align-items: center; }
+  .row.flip { grid-template-columns: 300px 1fr; }
+  .row.flip .shot { order: -1; }
+  .shot img {
+    width: 100%; max-width: 300px; height: auto; display: block; margin: 0 auto;
+    border-radius: 22px; border: 1px solid var(--line);
+  }
+  @media (max-width: 720px) {
+    .row, .row.flip { grid-template-columns: 1fr; gap: 26px; }
+    .row.flip .shot { order: 0; }
+  }
+
+  .tag {
+    display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .06em;
+    padding: 2px 9px; border-radius: 6px; vertical-align: middle; margin-left: 8px;
+  }
+  .tag.free { background: #e5f3e8; color: #256b36; }
+  .tag.paid { background: #f3ecdd; color: #7a5a1e; }
+  @media (prefers-color-scheme: dark) {
+    .tag.free { background: #1e3a26; color: #9ad9ac; }
+    .tag.paid { background: #3a3122; color: #e0c58a; }
+  }
+
+  ul { padding-left: 1.3em; margin: 0 0 1em; }
+  li { margin-bottom: .4em; }
+  .note { background: var(--bg-soft); border-radius: 14px; padding: 20px 22px; color: var(--fg-soft); font-size: .94rem; }
+  a { color: var(--accent); }
+
+  /* 料金 */
+  .plans { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px; }
+  .plan { background: var(--bg-soft); border-radius: 16px; padding: 22px 22px 18px; }
+  .plan h3 { margin-bottom: 2px; }
+  .plan .price { font-size: .9rem; color: var(--fg-soft); margin-bottom: 14px; }
+  .plan ul { margin: 0; padding-left: 1.2em; font-size: .95rem; }
+  @media (max-width: 560px) { .plans { grid-template-columns: 1fr; } }
+
+  footer { padding: 40px 0 64px; font-size: .9rem; color: var(--fg-soft); text-align: center; }
+  footer a { margin: 0 10px; display: inline-block; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <img class="appicon" src="images/appicon.png" alt="Sodato のアプリアイコン">
+    <span class="mark">iPhone アプリ</span>
+    <h1>次の水やりが、<br>「あと◯日」でわかる。</h1>
+    <p class="lead">
+      「前にいつ水をやったっけ」を、もう思い出さなくていい。<br>
+      Sodato は、観葉植物の次の水やり日を数えておくアプリです。<br>
+      図鑑もコミュニティもありません。
+    </p>
+    <!-- TODO: 審査承認後、App Store の実URL(https://apps.apple.com/jp/app/id########)に差し替える -->
+    <a class="cta" href="https://apps.apple.com/jp/app/idXXXXXXXXXX">App Store で見る</a>
+    <span class="cta-note">無料。買い切り 480円 あり（月額・年額の課金はありません）</span>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>水やりの間隔は、夏と冬で2倍以上変わる</h2>
+    <p class="sub">「10日おき」のような固定の間隔では、夏に足りず、冬に多すぎます。</p>
+
+    <div class="chart">
+      <svg viewBox="0 0 640 200" role="img" aria-label="標準的な観葉植物の月別の水やり間隔。1月と2月は12日、3月から5月は7日、6月から8月は5日、9月から11月は7日、12月は12日">
+        <g fill="var(--fg-soft)" font-size="13" font-family="-apple-system, sans-serif">
+          <!-- 12本のバー: 値は「標準的」カテゴリの月別間隔(日)。正本=plant-care-log/docs/reference/watering-category-table.md -->
+          <g>
+            <rect x="8"   y="30" width="36" height="112" rx="6" fill="var(--dry)"/>
+            <rect x="60"  y="30" width="36" height="112" rx="6" fill="var(--dry)"/>
+            <rect x="112" y="77" width="36" height="65"  rx="6" fill="var(--green)"/>
+            <rect x="164" y="77" width="36" height="65"  rx="6" fill="var(--green)"/>
+            <rect x="216" y="77" width="36" height="65"  rx="6" fill="var(--green)"/>
+            <rect x="268" y="95" width="36" height="47"  rx="6" fill="var(--green)"/>
+            <rect x="320" y="95" width="36" height="47"  rx="6" fill="var(--green)"/>
+            <rect x="372" y="95" width="36" height="47"  rx="6" fill="var(--green)"/>
+            <rect x="424" y="77" width="36" height="65"  rx="6" fill="var(--green)"/>
+            <rect x="476" y="77" width="36" height="65"  rx="6" fill="var(--green)"/>
+            <rect x="528" y="77" width="36" height="65"  rx="6" fill="var(--green)"/>
+            <rect x="580" y="30" width="36" height="112" rx="6" fill="var(--dry)"/>
+          </g>
+          <g fill="var(--fg)" font-size="13" text-anchor="middle">
+            <text x="26"  y="24">12日</text>
+            <text x="78"  y="24">12日</text>
+            <text x="130" y="71">7日</text>
+            <text x="182" y="71">7日</text>
+            <text x="234" y="71">7日</text>
+            <text x="286" y="89">5日</text>
+            <text x="338" y="89">5日</text>
+            <text x="390" y="89">5日</text>
+            <text x="442" y="71">7日</text>
+            <text x="494" y="71">7日</text>
+            <text x="546" y="71">7日</text>
+            <text x="598" y="24">12日</text>
+          </g>
+          <g text-anchor="middle">
+            <text x="26"  y="162">1月</text>
+            <text x="78"  y="162">2月</text>
+            <text x="130" y="162">3月</text>
+            <text x="182" y="162">4月</text>
+            <text x="234" y="162">5月</text>
+            <text x="286" y="162">6月</text>
+            <text x="338" y="162">7月</text>
+            <text x="390" y="162">8月</text>
+            <text x="442" y="162">9月</text>
+            <text x="494" y="162">10月</text>
+            <text x="546" y="162">11月</text>
+            <text x="598" y="162">12月</text>
+          </g>
+        </g>
+      </svg>
+      <p class="chart-cap">「標準的」（モンステラ・ポトス・パキラなど）を選んだときに用意される12か月分の間隔。夏は5日、冬は12日。</p>
+    </div>
+
+    <p style="margin-top:28px">
+      Sodato は、登録するときに <strong>「乾燥を好む／標準的／湿り気を好む」の3択を1回選ぶだけ</strong>で、
+      12か月分の間隔を自動で用意します。
+    </p>
+    <p>
+      次の水やり日は、その日が属する月の間隔で1日ずつ数えます。12月に水をやって1月をまたぐ場合も、
+      季節の移り変わりに沿って予定日が決まります。
+    </p>
+
+    <div class="row" style="margin-top:36px">
+      <div>
+        <h3>変えたい月だけ、触れる</h3>
+        <p style="margin-bottom:0">
+          用意された数字は、あとから月ごとに調整できます。育てているうちに「この鉢は夏でももう少し空けていい」と
+          分かったら、その月だけ直してください。触らない月はそのままです。
+        </p>
+      </div>
+      <div class="shot"><img src="images/shot-04.png" alt="月ごとの水やり間隔を編集する画面。1月と2月は7日、6月から8月は3日というように月別の日数が並ぶ" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="row">
+      <div>
+        <h2>開いて3秒で、今日やる鉢がわかる</h2>
+        <p>一覧に出るのは、名前と「あと◯日」と、その場で押せる操作だけです。</p>
+        <ul>
+          <li><strong>水やり</strong> … 記録すると、次の予定日が数え直されます</li>
+          <li><strong>スキップ</strong> … 土がまだ湿っていた日の「見送り」</li>
+          <li><strong>お世話記録</strong> … 水やり以外の記録と写真へ</li>
+        </ul>
+        <p style="margin-bottom:0">置き場所（リビング・寝室の窓際・玄関など）で絞り込めます。</p>
+      </div>
+      <div class="shot"><img src="images/shot-01.png" alt="鉢の一覧。各行に名前と「あと2日」などの残り日数、水やり・スキップ・お世話記録のボタンが並ぶ画面" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>見送っても、ごまかしません</h2>
+    <p>
+      土がまだ湿っていた日は「スキップ」として残せます。このとき<strong>次の予定日は動きません</strong>。
+      予定日を過ぎていれば「◯日超過」と出続けます。
+    </p>
+    <p style="margin-bottom:0">
+      見送るたびに予定が先送りされる作りにはしていません。先送りできてしまうと、
+      水やりが無限に後ろへずれていき、アプリの目的の逆に働くからです。
+      スキップで変わるのは、確認をうながす通知が2日後に来ることだけです。
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="row flip">
+      <div class="shot"><img src="images/shot-05.png" alt="設定画面。iCloud同期、リマインダー通知のオンオフ、通知する時刻9:00、サポートなどのリンクが並ぶ" loading="lazy"></div>
+      <div>
+        <h2>通知は「確認」をうながします<span class="tag free">無料</span></h2>
+        <p>
+          文面は「水をあげよう」ではなく、<strong>「土を触って確認してみよう」</strong>。
+        </p>
+        <p>
+          間隔の見積もりは、植物の生態を精密に再現するものではありません。
+          断定すると、そのズレがそのまま水のやりすぎ＝根腐れにつながります。
+          確認をうながす形なら、多少のズレが実害になりません。
+        </p>
+        <p style="margin-bottom:0">通知は時刻を選べます。切っても記録と「あと◯日」は残ります。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="row">
+      <div>
+        <h2>水やり以外のお世話も、8種類<span class="tag free">無料</span></h2>
+        <p>水やり・剪定・植え替え・施肥・葉の世話・害虫駆除・支柱立て・日光浴。</p>
+        <p style="margin-bottom:0">
+          どれも記録できて、どれも無料です。水やりだけは、記録すると次の予定日が更新されます。
+        </p>
+      </div>
+      <div class="shot"><img src="images/shot-02.png" alt="記録するお世話を選ぶ画面。水やり・剪定・植え替え・施肥・葉の世話・害虫駆除・支柱立て・日光浴の8つのアイコンが並ぶ" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="row flip">
+      <div class="shot"><img src="images/shot-03.png" alt="お世話の記録が新しい順に並ぶ履歴画面。記録と写真のタブがある" loading="lazy"></div>
+      <div>
+        <h2>写真で、成長を振り返る<span class="tag free">無料</span></h2>
+        <p>お世話の記録に写真を添えると、時系列で並びます。写真だけの記録も残せます。</p>
+        <p style="margin-bottom:0">
+          写真は<strong>お使いの写真アプリのものを参照します</strong>。アプリの中に画像をコピーしないので、
+          鉢を増やしても本体の容量を圧迫しません。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>1鉢から5鉢の人のために作りました</h2>
+    <p>
+      部屋に緑を置きたい程度で、植物マニアではない。以前に一度枯らしたことがあって、
+      いつ水をやればいいのか分からないまま感覚で世話している。そういう人のためのアプリです。
+    </p>
+    <p style="margin-bottom:0">
+      多機能なアプリを入れたものの、開かなくなった経験がある方に向いています。
+      たくさんの鉢を管理したい愛好家向けではありません。
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>料金</h2>
+    <p class="sub">買い切りです。月額・年額の課金はありません。</p>
+
+    <div class="plans">
+      <div class="plan">
+        <h3>無料</h3>
+        <p class="price">0円</p>
+        <ul>
+          <li>5鉢まで登録</li>
+          <li>次の水やり日の計算とリマインダー通知</li>
+          <li>水やり／スキップの記録</li>
+          <li>8種類のお世話の記録</li>
+          <li>写真の記録と時系列表示</li>
+          <li>場所での絞り込み</li>
+        </ul>
+      </div>
+      <div class="plan">
+        <h3>すべての機能を解放</h3>
+        <p class="price">480円（買い切り・一度きり）</p>
+        <ul>
+          <li>6鉢目以降の登録（上限の解放）</li>
+          <li>複数の鉢へまとめてお世話を記録</li>
+          <li>iCloud での端末間同期</li>
+        </ul>
+      </div>
+    </div>
+    <p class="sub" style="margin:22px 0 0">購入の復元にも対応しています。</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>データの扱い</h2>
+    <p>
+      アカウントは要りません。メールアドレスもパスワードも不要です。
+      鉢とお世話の記録は、お使いの端末と、ご自身の iCloud にのみ保存されます。開発者がその中身を読むことはありません。
+    </p>
+    <p>
+      広告は表示せず、行動の追跡もしていません。<strong>第三者のサービスにデータを渡すことはありません</strong>
+      （通信するのは、iCloud 同期と購入のために Apple のサーバーとだけです）。
+    </p>
+    <div class="note">
+      <strong>iCloud 同期について。</strong>同期されるのは、鉢・お世話の記録・写真の「参照」です。
+      画像そのものはお使いの写真アプリの中にあります。iCloud写真をお使いなら他の端末でも同じ写真が表示されます。
+      iCloud写真がオフの端末や、写真アプリから削除した写真は表示できません（記録は残ります）。
+    </div>
+    <p style="margin-top:24px; margin-bottom:0">
+      <a href="https://shoheicraftdev-design.github.io/sodato-support/privacy.html">プライバシーポリシー</a>
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>あえて入れていないもの</h2>
+    <ul>
+      <li><strong>図鑑・種類の自動判定</strong> … 育て方の情報は持ちません。分類から日数への変換に絞っています</li>
+      <li><strong>コミュニティ・共有</strong> … 記録は自分の中に閉じます</li>
+      <li><strong>連続記録日数（ストリーク）</strong> … 続けることを競わせないためです</li>
+    </ul>
+    <p class="sub" style="margin-bottom:0">まだ作っていないのではなく、入れないことを選んでいる機能です。</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>対応環境</h2>
+    <p style="margin-bottom:0">iOS 17.0 以降の iPhone。</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <!-- TODO: 審査承認後、App Store の実URLに差し替える -->
+    <p><a class="cta" href="https://apps.apple.com/jp/app/idXXXXXXXXXX">App Store で見る</a></p>
+    <p style="margin-top:26px">
+      <a href="https://shoheicraftdev-design.github.io/sodato-support/">サポート</a>
+      <a href="https://shoheicraftdev-design.github.io/sodato-support/privacy.html">プライバシーポリシー</a>
+      <a href="https://shoheicraftdev-design.github.io/sodato-support/terms.html">利用規約</a>
+      <a href="mailto:shohei.craft.dev@gmail.com">お問い合わせ</a>
+    </p>
+    <p style="margin-top:18px">ShoheiCraftDev</p>
+  </div>
+</footer>
+
+</body>
+</html>
