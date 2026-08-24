@@ -3,10 +3,8 @@
 iPhone アプリ「Sodato」（内部名 PlantCareLog）の製品紹介ページ。GitHub Pages で公開する想定。
 
 - 公開URL: https://shoheicraftdev-design.github.io/sodato-lp/
-- App Store: **未確定**（審査中）。CTA は `<span class="cta-pending">App Store 審査中</span>` で待機中。
-  承認後に `index.html` の2箇所（ヒーロー・フッター、各 `TODO` コメントの直下）を
-  `<a class="cta" href="https://apps.apple.com/jp/app/id########">App Store で見る</a>` へ戻し、
-  ヒーローの `.cta-note` から「まもなく公開します。」を削る。`.cta-pending` の CSS も不要になったら消してよい
+- App Store: **公開中**。`https://apps.apple.com/jp/app/id6798340201`
+  （2026-08-24、`index.html` 2箇所を `<a class="cta">` に差し替え済み）
 - サポート / プライバシーポリシー / 利用規約: https://shoheicraftdev-design.github.io/sodato-support/
 
 ## 位置づけ
