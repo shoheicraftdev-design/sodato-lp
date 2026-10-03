@@ -2,8 +2,8 @@
 
 iPhone アプリ「Sodato 観葉植物の水やり記録」（ホーム画面の表示名は Sodato、内部名 PlantCareLog）の製品紹介ページ。GitHub Pages（main）で公開している。
 
-- 内容の版: **ver-2.0（ストア 2.0・2026-09-16 公開）**。2026-09-28 に更新（d-yso5qm）
-- 文言の正本: アプリ側リポジトリ `plant-care-log` の `docs/appstore/asc-paste/`（`description.txt`＝CEO が ASC で手直しした後の実値。公開中の説明文と一致）・`docs/appstore/ver-2.0-submission.md`・`docs/appstore/v2-store-listing.md`。LP で新しい言い回しを作らず、ここに揃える
+- 内容の版: **ver-3.0（ストア 3.0・2026-10-03 公開）**。2026-10-03 に更新（画像を v3 に差し替え・タイムラインの段落をタブ構成に。CEO 指示）
+- 文言の正本: アプリ側リポジトリ `plant-care-log` の `docs/appstore/asc-paste/`（`description.txt`＝公開中の説明文と一致）・`docs/appstore/ver-3.0-submission.md`。LP で新しい言い回しを作らず、ここに揃える
 
 - 公開URL: https://shoheicraftdev-design.github.io/sodato-lp/
 - App Store: **公開中**。`https://apps.apple.com/jp/app/id6798340201`
@@ -13,14 +13,13 @@ iPhone アプリ「Sodato 観葉植物の水やり記録」（ホーム画面の
 ## 位置づけ
 
 えも日LP（`emo-diary-lp`）と同じく、**匿名ライン（note・Xで製品名を出さない）を維持したまま
-アプリ名とストアURLを出せるチャネル**。ASC のマーケティングURLには**設定していない**（空欄のまま。
-`plant-care-log/docs/appstore/v2-store-listing.md` §8。入れる場合はその決定をアプリ側に記録してから）。
+アプリ名とストアURLを出せるチャネル**。ASC のマーケティングURLに**この LP を設定している**（ストア 3.0 から・2026-10-02 CEO 指示。`plant-care-log/docs/appstore/ver-3.0-submission.md` #31）。
 サポート・法務ページは別リポジトリ `sodato-support` が持つ（ここには置かない）。
 
 ## 素材
 
 `images/` のスクリーンショットは、アプリ側リポジトリ `plant-care-log` の
-`docs/appstore/screenshots/v2/iphone-6.7-1284x2778/`（ver-2.0 の掲載スクショ・上部にキャプション1行入り）を
+`docs/appstore/screenshots/v3/iphone-6.7-1284x2778/`（ver-3.0 の掲載スクショ・上部にキャプション1行入り）を
 長辺640pxへ縮小したもの（`sips -Z 640`）。
 差し替える場合は元の 1284×2778 から作り直すこと。`appicon.png` は
 `PlantCareLog/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png` の縮小。
