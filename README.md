@@ -31,6 +31,11 @@ iPhone アプリ「Sodato 観葉植物の水やり記録」（ホーム画面の
 | `shot-03.png` | `03_care-timeline-all.png`（全植物横断タイムライン） |
 | `shot-04.png` | `04_monthly-intervals.png` |
 | `shot-05.png` | `05_settings-notification.png` |
+| `hero.jpg` | ファーストビューの背景写真（商用フリー素材・CEO 提供 2026-10-04） |
+| `photo-window.webp` | 「写真で、成長を振り返る」カードの写真（商用フリー素材・CEO 提供 2026-10-04） |
+
+レイアウトは 2026-10-04 にリデザイン（Design キャンバス https://claude.ai/artifact/8GHiPuySZCkCPpq6YNRbhN で作成→静的HTMLに書き出し）。
+本文の手動改行（`<br>`）は PC 用。760px 以下では `p br, li br, figcaption br` を非表示にしている。
 
 ## 文言のルール（アプリ側 `docs/appstore/v1-store-listing.md` の禁止事項を継承。ver-2.0 の差分は `v2-store-listing.md`）
 
