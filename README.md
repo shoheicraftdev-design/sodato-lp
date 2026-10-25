@@ -2,7 +2,7 @@
 
 iPhone アプリ「Sodato 観葉植物の水やり記録」（ホーム画面の表示名は Sodato、内部名 PlantCareLog）の製品紹介ページ。GitHub Pages（main）で公開している。
 
-- 内容の版: **ver-3.0（ストア 3.0・2026-10-03 公開）**。2026-10-03 に更新（画像を v3 に差し替え・タイムラインの段落をタブ構成に。CEO 指示）
+- 内容の版: **ver-3.1**（ブランチ `ver-3.1`。main への反映はストアで 3.1 が公開されてから）
 - 文言の正本: **この LP 自身**。ASC の説明文（`plant-care-log/docs/appstore/asc-paste/`）と揃えなくてよい（2026-10-04 CEO 決裁）。機能の事実関係はアプリ側を参照し、下の「書いてはいけない」は引き続き守る
 
 - 公開URL: https://shoheicraftdev-design.github.io/sodato-lp/
@@ -19,20 +19,20 @@ iPhone アプリ「Sodato 観葉植物の水やり記録」（ホーム画面の
 ## 素材
 
 `images/` のスクリーンショットは、アプリ側リポジトリ `plant-care-log` の
-`docs/appstore/screenshots/v3/iphone-6.7-1284x2778/`（ver-3.0 の掲載スクショ・上部にキャプション1行入り）を
+`docs/appstore/screenshots/v3.1/iphone-6.3-1206x2622/`（ver-3.1 の掲載スクショ・上部にキャプション1行入り）を
 長辺640pxへ縮小したもの（`sips -Z 640`）。
-差し替える場合は元の 1284×2778 から作り直すこと。`appicon.png` は
+差し替える場合は元の 1206×2622 から作り直すこと。`appicon.png` は
 `PlantCareLog/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png` の縮小。
 
 | ファイル | 元 |
 | :--- | :--- |
 | `shot-01.png` | `01_home-list.png` |
 | `shot-02.png` | `02_care-picker.png` |
-| `shot-03.png` | `03_care-timeline-all.png`（全植物横断タイムライン） |
-| `shot-04.png` | `04_monthly-intervals.png` |
-| `shot-05.png` | `05_settings-notification.png` |
+| `shot-03.png` | `03_care-timeline-all.png`（タイムラインのお世話の記録側） |
+| `shot-04.png` | `05_monthly-intervals.png` |
+| `shot-05.png` | `06_settings-notification.png` |
+| `shot-06.png` | `04_care-timeline-photos.png`（タイムラインの写真側。「写真で、成長を振り返る」カード） |
 | `hero.jpg` | ファーストビューの背景写真（商用フリー素材・CEO 提供 2026-10-04） |
-| `photo-window.webp` | 「写真で、成長を振り返る」カードの写真（商用フリー素材・CEO 提供 2026-10-04） |
 
 レイアウトは 2026-10-04 にリデザイン（Design キャンバス https://claude.ai/artifact/8GHiPuySZCkCPpq6YNRbhN で作成→静的HTMLに書き出し）。
 本文の手動改行（`<br>`）は PC 用。760px 以下では `p br, li br, figcaption br` を非表示にしている。
