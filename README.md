@@ -2,7 +2,7 @@
 
 iPhone アプリ「Sodato 観葉植物の水やり記録」（ホーム画面の表示名は Sodato、内部名 PlantCareLog）の製品紹介ページ。GitHub Pages（main）で公開している。
 
-- 内容の版: **ver-3.1**（ブランチ `ver-3.1`。main への反映はストアで 3.1 が公開されてから）
+- 内容の版: **ver-3.1（ストア 3.1・2026-10-26 公開）**
 - 文言の正本: **この LP 自身**。ASC の説明文（`plant-care-log/docs/appstore/asc-paste/`）と揃えなくてよい（2026-10-04 CEO 決裁）。機能の事実関係はアプリ側を参照し、下の「書いてはいけない」は引き続き守る
 
 - 公開URL: https://shoheicraftdev-design.github.io/sodato-lp/
